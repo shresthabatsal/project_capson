@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_live"
+        android:icon="@drawable/live"
+        android:title="" />
+
+    <item
+        android:id="@+id/nav_conversation"
+        android:icon="@drawable/baseline_translate_24"
+        android:title="" />
+
+    <item
+        android:id="@+id/nav_scan"
+        android:icon="@drawable/scan"
+        android:title="" />
+</menu>
