@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Regular -->
+    <font
+        app:fontStyle="normal"
+        app:fontWeight="400"
+        app:font="@font/montserrat_regular" />
+
+    <!-- Italic -->
+    <font
+        app:fontStyle="italic"
+        app:fontWeight="400"
+        app:font="@font/montserrat_italic" />
+
+    <!-- Thin -->
+    <font
+        app:fontStyle="normal"
+        app:fontWeight="100"
+        app:font="@font/montserrat_thin" />
+
+    <!-- Thin Italic -->
+    <font
+        app:fontStyle="italic"
+        app:fontWeight="100"
+        app:font="@font/montserrat_thin_italic" />
+
+    <!-- Extra Light -->
+    <font
+        app:fontStyle="normal"
+        app:fontWeight="200"
+        app:font="@font/montserrat_extra_light" />
+
+    <!-- Extra Light Italic -->
+    <font
+        app:fontStyle="italic"
+        app:fontWeight="200"
+        app:font="@font/montserrat_extra_light_italic" />
+
+    <!-- Light -->
+    <font
+        app:fontStyle="normal"
+        app:fontWeight="300"
+        app:font="@font/montserrat_light" />
+
+    <!-- Light Italic -->
+    <font
+        app:fontStyle="italic"
+        app:fontWeight="300"
+        app:font="@font/montserrat_light_italic" />
+
+    <!-- Medium -->
+    <font
+        app:fontStyle="normal"
+        app:fontWeight="500"
+        app:font="@font/montserrat_medium" />
+
+    <!-- Medium Italic -->
+    <font
+        app:fontStyle="italic"
+        app:fontWeight="500"
+        app:font="@font/montserrat_medium_italic" />
+
+    <!-- Semi Bold -->
+    <font
+        app:fontStyle="normal"
+        app:fontWeight="600"
+        app:font="@font/montserrat_semi_bold" />
+
+    <!-- Semi Bold Italic -->
+    <font
+        app:fontStyle="italic"
+        app:fontWeight="600"
+        app:font="@font/montserrat_semi_bold_italic" />
+
+    <!-- Bold -->
+    <font
+        app:fontStyle="normal"
+        app:fontWeight="700"
+        app:font="@font/montserrat_bold" />
+
+    <!-- Bold Italic -->
+    <font
+        app:fontStyle="italic"
+        app:fontWeight="700"
+        app:font="@font/montserrat_bold_italic" />
+
+    <!-- Extra Bold -->
+    <font
+        app:fontStyle="normal"
+        app:fontWeight="800"
+        app:font="@font/montserrat_extra_bold" />
+
+    <!-- Extra Bold Italic -->
+    <font
+        app:fontStyle="italic"
+        app:fontWeight="800"
+        app:font="@font/montserrat_extra_bold_italic" />
+
+    <!-- Black -->
+    <font
+        app:fontStyle="normal"
+        app:fontWeight="900"
+        app:font="@font/montserrat_black" />
+
+    <!-- Black Italic -->
+    <font
+        app:fontStyle="italic"
+        app:fontWeight="900"
+        app:font="@font/montserrat_black_italic" />
+
+</font-family>
