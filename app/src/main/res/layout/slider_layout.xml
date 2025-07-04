@@ -9,12 +9,13 @@
     android:background="@color/white">
 
 
+    <!-- Image of the slide -->
     <TextView
         android:id="@+id/textTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
         android:breakStrategy="simple"
         android:fontFamily=""
         android:gravity="start"
@@ -24,13 +25,12 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <!-- Image of the slide -->
     <TextView
         android:id="@+id/textDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="24dp"
         android:breakStrategy="simple"
         android:fontFamily=""
@@ -43,8 +43,8 @@
     <ImageView
         android:id="@+id/slideImage"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="30dp"
         android:contentDescription="Slide Image"
         android:src="@drawable/placeholder_imageee" />
 </LinearLayout>
