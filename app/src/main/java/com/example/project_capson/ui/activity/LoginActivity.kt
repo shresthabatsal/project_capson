@@ -1,4 +1,4 @@
-package com.example.project_capson.ui
+package com.example.project_capson.ui.activity
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
