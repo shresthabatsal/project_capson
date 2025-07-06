@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "843310068027",
+    "project_id": "project-capson",
+    "storage_bucket": "project-capson.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843310068027:android:18398d938852a0a206c71e",
+        "android_client_info": {
+          "package_name": "com.example.project_capson"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHgOuoCLaQpqByPZPwE5OOvs6aPFTIzUY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
