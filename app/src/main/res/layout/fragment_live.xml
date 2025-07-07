@@ -1,14 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.LiveFragment">
+    android:orientation="vertical"
+    android:paddingBottom="16dp"
+    android:paddingRight="16dp"
+    android:paddingLeft="16dp"
+    android:paddingTop="0dp"
+    android:background="#FFFFFF">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Language Selection -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/edittext_background"
+        android:padding="12dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center_vertical">
 
-</FrameLayout>
+        <!-- From -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="start">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="7dp"
+                android:text="Translate from"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner_background" />
+        </LinearLayout>
+
+        <!-- Exchange Button -->
+        <ImageButton
+            android:id="@+id/btn_exchange"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="@drawable/transparent_bg"
+            android:src="@drawable/exchange"
+            android:contentDescription="Exchange" />
+
+        <!-- To -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="7dp"
+                android:text="Translate to"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner_background" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Output Box -->
+    <TextView
+        android:id="@+id/output_box"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/edittext_background"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:hint="Caption appears here."
+        android:textColor="#000000"
+        android:gravity="top|start"
+        android:scrollbars="vertical"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Timer -->
+    <TextView
+        android:id="@+id/timer_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#CCCCCC"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Controls Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/btn_pause"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/transparent_bg"
+            android:src="@drawable/pause"
+            android:contentDescription="Pause"
+            android:layout_marginEnd="24dp" />
+
+        <ImageButton
+            android:id="@+id/btn_listen_stop"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="@drawable/circle_black_button_bg"
+            android:src="@drawable/speak"
+            android:contentDescription="Listen"
+            android:layout_marginEnd="24dp"
+            app:tint="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/btn_refresh"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/transparent_bg"
+            android:src="@drawable/refresh"
+            android:contentDescription="Refresh" />
+    </LinearLayout>
+</LinearLayout>
