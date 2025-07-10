@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- ─────────────────────────  Top App Bar  ────────────────────────── -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorSurface"
+        app:title="Help"
+        app:titleCentered="true"
+        app:navigationIcon="@drawable/ic_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- ─────────────────────────  Scrollable area  ────────────────────── -->
+    <ScrollView
+        android:id="@+id/scrollArea"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- ───── Content column ───── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Guide title -->
+            <TextView
+                android:id="@+id/tvGuideTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Guide: Live Captions Translation"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/montserrat"/>
+
+            <!-- Tag‑line / short description -->
+            <TextView
+                android:id="@+id/tvTagline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_marginBottom="12dp"
+                android:fontFamily="@font/montserrat"
+                android:text="For understanding speech in real‑time.\nIf you’re attending a talk, seminar, or event in\nanother language, this tool helps you follow\nalong by showing translated captions." />
+
+            <!-- Section heading -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="How it works:"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/montserrat"/>
+
+            <!-- Steps -->
+            <TextView
+                android:id="@+id/tvSteps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:lineSpacingExtra="3dp"
+                android:fontFamily="@font/montserrat"
+                android:text="1. Select Languages\nChoose the language you are speaking from, and the one you want it translated to.\n\n2. Start Listening\nTap the Listen button to begin. The app will start capturing speech and translating it live.\n\n3. Manage Translation Session\nOnce listening begins:\n • Stop ends the session\n • Pause temporarily stops listening and freezes the timer (tap Resume to continue)\n • Refresh clears the caption area\n\n4. View Captions\nTranslated text appears in real‑time below the language selectors.\n\n5. Track Time\nA timer shows how long the app has been actively listening." />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

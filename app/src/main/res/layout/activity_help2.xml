@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- ─────────────────────────  Top App Bar  ────────────────────────── -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorSurface"
+        app:title="Help"
+        app:titleCentered="true"
+        app:navigationIcon="@drawable/ic_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- ─────────────────────────  Scrollable area  ────────────────────── -->
+    <ScrollView
+        android:id="@+id/scrollArea"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- ───── Content column ───── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Guide title -->
+            <TextView
+                android:id="@+id/tvGuideTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Guide: Live Captions Translation"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/montserrat"/>
+
+            <!-- Tag‑line / short description -->
+            <TextView
+                android:id="@+id/tvTagline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_marginBottom="12dp"
+                android:fontFamily="@font/montserrat"
+                android:text="For two people to understand each other in\n different languages..\nWhether you're chatting with a friend, helping a traveler, or working across languages, this tool helps both sides speak, listen, and understand." />
+
+            <!-- Section heading -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="How it works:"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/montserrat"/>
+
+            <!-- Steps -->
+            <TextView
+                android:id="@+id/tvSteps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                android:fontFamily="@font/montserrat"
+                android:text="1.Dual Panels for Each Speaker\nThere are two identical input panels — one for each person in the conversation. \n\n2.Input Text or Speak\nYou can either type your message or use speech-to-text by tapping Speak.\n\n3.Select Language\nChoose the language you're speaking in for each panel using the dropdown below the input box.\n\n4.Use Translation Tools\nAfter input:\n
+•Tap Speaker to hear it aloud.\n
+•Tap Copy to copy the translated phrase.\n
+•Tap Clear to reset the input box.\n
+•Tap Stop to end voice input if it’s active.\n
+\n
+The other person can do the same on their panel. You take turns inputting, listening, and responding." />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
