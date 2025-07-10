@@ -14,6 +14,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.project_capson.R
+import com.google.mlkit.common.model.DownloadConditions
+import com.google.mlkit.nl.translate.TranslateLanguage
+import com.google.mlkit.nl.translate.Translation
+import com.google.mlkit.nl.translate.Translator
+import com.google.mlkit.nl.translate.TranslatorOptions
 
 class LiveFragment : Fragment() {
 
@@ -32,7 +37,11 @@ class LiveFragment : Fragment() {
     private var currentLanguageCode = "en-US"
     private var elapsedSeconds = 0
     private val handler = Handler(Looper.getMainLooper())
-    private val TAG = "SpeechApp"
+    private val TAG = "LiveFragment"
+
+    private var translator: Translator? = null
+    private var sourceLangCode: String = "en"
+    private var targetLangCode: String = "hi"
 
     private val timerRunnable = object : Runnable {
         override fun run() {
@@ -45,18 +54,18 @@ class LiveFragment : Fragment() {
     }
 
     private val languages = listOf(
-        "en-US" to "English",
-        "hi-IN" to "Hindi",
-        "es-ES" to "Spanish",
-        "fr-FR" to "French",
-        "de-DE" to "German"
+        Triple("en-US", "en", "English"),
+        Triple("hi-IN", "hi", "Hindi"),
+        Triple("es-ES", "es", "Spanish"),
+        Triple("fr-FR", "fr", "French"),
+        Triple("de-DE", "de", "German")
     )
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         if (granted) initSpeechRecognizer()
-        else Toast.makeText(requireContext(), "Mic permission needed", Toast.LENGTH_SHORT).show()
+        else if (isAdded) Toast.makeText(requireContext(), "Mic permission needed", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -82,7 +91,7 @@ class LiveFragment : Fragment() {
     }
 
     private fun setupSpinners() {
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, languages.map { it.second })
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, languages.map { it.third })
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerFrom.adapter = adapter
         spinnerTo.adapter = adapter
@@ -92,7 +101,17 @@ class LiveFragment : Fragment() {
         spinnerFrom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 currentLanguageCode = languages[position].first
-                if (isListening) restartListening()
+                sourceLangCode = languages[position].second
+                createTranslator()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
+        spinnerTo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                targetLangCode = languages[position].second
+                createTranslator()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -125,8 +144,8 @@ class LiveFragment : Fragment() {
     }
 
     private fun checkMicPermission() {
-        val context = requireContext()
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO)
+        if (!isAdded) return
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO)
             == PackageManager.PERMISSION_GRANTED
         ) {
             initSpeechRecognizer()
@@ -138,9 +157,11 @@ class LiveFragment : Fragment() {
     private fun initSpeechRecognizer() {
         destroyRecognizer()
 
-        if (!SpeechRecognizer.isRecognitionAvailable(requireContext())) {
-            Toast.makeText(requireContext(), "Speech recognition not available", Toast.LENGTH_SHORT).show()
-            btnListenStop.isEnabled = false
+        if (!isAdded || !SpeechRecognizer.isRecognitionAvailable(requireContext())) {
+            if (isAdded) {
+                Toast.makeText(requireContext(), "Speech recognition not available", Toast.LENGTH_SHORT).show()
+                btnListenStop.isEnabled = false
+            }
             return
         }
 
@@ -152,14 +173,32 @@ class LiveFragment : Fragment() {
                 override fun onBufferReceived(buffer: ByteArray?) {}
                 override fun onEndOfSpeech() {}
                 override fun onError(error: Int) {
-                    Log.e(TAG, "Error: $error")
-                    stopListening()
+                    Log.e(TAG, "SpeechRecognizer error: $error")
+                    if (isListening && !isPaused) {
+                        handler.postDelayed({ startListening() }, 500)
+                    }
                 }
 
                 override fun onResults(results: Bundle?) {
                     val spokenText = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)?.firstOrNull()
-                    outputBox.append("$spokenText\n")
-                    startListening()
+                    if (!spokenText.isNullOrEmpty()) {
+                        translator?.translate(spokenText)
+                            ?.addOnSuccessListener { translatedText ->
+                                if (isAdded) {
+                                    val needsSpace = outputBox.text.isNotEmpty() &&
+                                            !outputBox.text.trim().endsWith(" ")
+                                    outputBox.append((if (needsSpace) " " else "") + translatedText)
+                                }
+                            }
+                            ?.addOnFailureListener {
+                                if (isAdded) {
+                                    outputBox.append(" Translation failed: $spokenText")
+                                }
+                            }
+                    }
+                    if (isListening && !isPaused) {
+                        handler.postDelayed({ startListening() }, 300)
+                    }
                 }
 
                 override fun onPartialResults(partialResults: Bundle?) {}
@@ -169,20 +208,31 @@ class LiveFragment : Fragment() {
     }
 
     private fun startListening() {
-        initSpeechRecognizer()
+        if (speechRecognizer == null) initSpeechRecognizer()
+        if (!isAdded) return
 
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, currentLanguageCode)
+            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
+            putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, requireContext().packageName)
         }
 
-        speechRecognizer?.startListening(intent)
+        try {
+            speechRecognizer?.startListening(intent)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to start listening: ${e.message}")
+            return
+        }
+
+        if (!isListening) {
+            elapsedSeconds = 0
+            updateTimerText()
+            handler.post(timerRunnable)
+        }
 
         isListening = true
         isPaused = false
-        elapsedSeconds = 0
-        updateTimerText()
-        handler.post(timerRunnable)
 
         btnListenStop.setImageResource(R.drawable.baseline_stop_24)
         btnPause.setImageResource(R.drawable.pause)
@@ -191,12 +241,14 @@ class LiveFragment : Fragment() {
     private fun stopListening() {
         try {
             speechRecognizer?.stopListening()
+            speechRecognizer?.cancel()
         } catch (_: Exception) {}
+
         isListening = false
         isPaused = false
+        handler.removeCallbacks(timerRunnable)
         elapsedSeconds = 0
         updateTimerText()
-        handler.removeCallbacks(timerRunnable)
 
         btnListenStop.setImageResource(R.drawable.speak)
         btnPause.setImageResource(R.drawable.pause)
@@ -212,22 +264,45 @@ class LiveFragment : Fragment() {
     }
 
     private fun resumeListening() {
-        initSpeechRecognizer()
+        if (speechRecognizer == null) initSpeechRecognizer()
+        if (!isAdded) return
 
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, currentLanguageCode)
+            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
+            putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, requireContext().packageName)
         }
 
-        speechRecognizer?.startListening(intent)
+        try {
+            speechRecognizer?.startListening(intent)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to resume listening: ${e.message}")
+        }
+
         isPaused = false
         handler.post(timerRunnable)
         btnPause.setImageResource(R.drawable.pause)
     }
 
-    private fun restartListening() {
-        stopListening()
-        handler.postDelayed({ startListening() }, 800)
+    private fun createTranslator() {
+        translator?.close()
+
+        val options = TranslatorOptions.Builder()
+            .setSourceLanguage(sourceLangCode)
+            .setTargetLanguage(targetLangCode)
+            .build()
+
+        translator = Translation.getClient(options)
+
+        val conditions = DownloadConditions.Builder().build()
+        translator?.downloadModelIfNeeded(conditions)
+            ?.addOnSuccessListener {
+                Log.d(TAG, "ML Kit model downloaded")
+            }
+            ?.addOnFailureListener {
+                Toast.makeText(requireContext(), "Translation model download failed", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun updateTimerText() {
@@ -243,9 +318,20 @@ class LiveFragment : Fragment() {
         speechRecognizer = null
     }
 
+    override fun onPause() {
+        stopListening()
+        super.onPause()
+    }
+
+    override fun onStop() {
+        stopListening()
+        super.onStop()
+    }
+
     override fun onDestroyView() {
         destroyRecognizer()
         handler.removeCallbacksAndMessages(null)
+        translator?.close()
         super.onDestroyView()
     }
 }
