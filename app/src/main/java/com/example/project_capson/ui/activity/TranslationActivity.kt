@@ -7,12 +7,14 @@ import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.project_capson.R
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.translate.TranslateLanguage
+import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.Translator
 import com.google.mlkit.nl.translate.TranslatorOptions
 import java.util.*
@@ -34,20 +36,24 @@ class TranslationActivity : AppCompatActivity() {
     private var topToBottomTranslator: Translator? = null
     private var bottomToTopTranslator: Translator? = null
 
+    private val TAG = "TranslationActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_translation)
 
-        // Toolbar
+        // Toolbar setup
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.topToolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        toolbar.setNavigationOnClickListener {
-            finish()
-        }
+        toolbar.setNavigationOnClickListener { finish() }
 
         // Initialize Text-to-Speech
-        tts = TextToSpeech(this) { tts.language = Locale.ENGLISH }
+        tts = TextToSpeech(this) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                tts.language = Locale.ENGLISH
+            }
+        }
 
         // Bind views
         val topPanel = findViewById<View>(R.id.topPanel)
@@ -69,11 +75,37 @@ class TranslationActivity : AppCompatActivity() {
         topSpinner.adapter = adapter
         bottomSpinner.adapter = adapter
 
-        // Set initial selections
+        // Set default selections
         spinnerFrom.setSelection(0)
         spinnerTo.setSelection(1)
         topSpinner.setSelection(0)
         bottomSpinner.setSelection(1)
+
+        // Enable spinners for user interaction
+        topSpinner.isEnabled = true
+        bottomSpinner.isEnabled = true
+
+        // Handle incoming OCR text
+        intent?.getStringExtra("detectedText")?.let { text ->
+            topInputText.setText(text)
+            topInputText.setSelection(text.length)
+        }
+
+        // Handle detected language
+        intent?.getStringExtra("languageCode")?.let { langCode ->
+            val lang = when (langCode) {
+                "en" -> "English"
+                "es" -> "Spanish"
+                "fr" -> "French"
+                "hi" -> "Hindi"
+                else -> "English"
+            }
+            val index = languages.indexOf(lang)
+            if (index != -1) {
+                spinnerFrom.setSelection(index)
+                topSpinner.setSelection(index)
+            }
+        }
 
         // Exchange button logic
         exchangeBtn.setOnClickListener {
@@ -81,49 +113,52 @@ class TranslationActivity : AppCompatActivity() {
             val toPos = spinnerTo.selectedItemPosition
             spinnerFrom.setSelection(toPos)
             spinnerTo.setSelection(fromPos)
+            topSpinner.setSelection(toPos)
+            bottomSpinner.setSelection(fromPos)
+
+            val tempText = topInputText.text.toString()
+            topInputText.setText(bottomInputText.text.toString())
+            bottomInputText.setText(tempText)
         }
 
         // Language change listener
         val onLangChange = {
             val fromPos = spinnerFrom.selectedItemPosition
             val toPos = spinnerTo.selectedItemPosition
-
             topSpinner.setSelection(fromPos)
             bottomSpinner.setSelection(toPos)
-
             createTranslators()
-            topInputText.text.clear()
-            bottomInputText.text.clear()
+            if (!topInputText.text.isNullOrBlank()) {
+                translateText(topInputText.text.toString())
+            }
         }
 
         spinnerFrom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p: AdapterView<*>, v: View?, pos: Int, id: Long) = onLangChange()
-            override fun onNothingSelected(p: AdapterView<*>) {}
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) = onLangChange()
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
         spinnerTo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p: AdapterView<*>, v: View?, pos: Int, id: Long) = onLangChange()
-            override fun onNothingSelected(p: AdapterView<*>) {}
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) = onLangChange()
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
-        // Sync panel spinners -> main spinners
+        // Panel spinner sync back to main spinners
         topSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p: AdapterView<*>, v: View?, pos: Int, id: Long) {
-                spinnerFrom.setSelection(pos)
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                spinnerFrom.setSelection(position)
             }
-
-            override fun onNothingSelected(p: AdapterView<*>) {}
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
         bottomSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p: AdapterView<*>, v: View?, pos: Int, id: Long) {
-                spinnerTo.setSelection(pos)
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                spinnerTo.setSelection(position)
             }
-
-            override fun onNothingSelected(p: AdapterView<*>) {}
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
-        // Text change watchers
+        // Text watchers
         topInputText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (isEditingTop) return
@@ -134,15 +169,7 @@ class TranslationActivity : AppCompatActivity() {
                     isEditingBottom = false
                     return
                 }
-                topToBottomTranslator?.translate(text)
-                    ?.addOnSuccessListener {
-                        bottomInputText.setText(it)
-                        isEditingBottom = false
-                    }
-                    ?.addOnFailureListener {
-                        Toast.makeText(this@TranslationActivity, "Error: ${it.localizedMessage}", Toast.LENGTH_SHORT).show()
-                        isEditingBottom = false
-                    }
+                translateText(text, true)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -159,15 +186,7 @@ class TranslationActivity : AppCompatActivity() {
                     isEditingTop = false
                     return
                 }
-                bottomToTopTranslator?.translate(text)
-                    ?.addOnSuccessListener {
-                        topInputText.setText(it)
-                        isEditingTop = false
-                    }
-                    ?.addOnFailureListener {
-                        Toast.makeText(this@TranslationActivity, "Error: ${it.localizedMessage}", Toast.LENGTH_SHORT).show()
-                        isEditingTop = false
-                    }
+                translateText(text, false)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -177,6 +196,24 @@ class TranslationActivity : AppCompatActivity() {
         createTranslators()
         setupPanelControls(topPanel)
         setupPanelControls(bottomPanel)
+    }
+
+    private fun translateText(text: String, isTopToBottom: Boolean = true) {
+        val translator = if (isTopToBottom) topToBottomTranslator else bottomToTopTranslator
+        translator?.translate(text)
+            ?.addOnSuccessListener { translatedText ->
+                if (isTopToBottom) {
+                    bottomInputText.setText(translatedText)
+                    isEditingBottom = false
+                } else {
+                    topInputText.setText(translatedText)
+                    isEditingTop = false
+                }
+            }
+            ?.addOnFailureListener {
+                Toast.makeText(this, "Translation error: ${it.localizedMessage}", Toast.LENGTH_SHORT).show()
+                if (isTopToBottom) isEditingBottom = false else isEditingTop = false
+            }
     }
 
     private fun setupPanelControls(panel: View) {
@@ -189,8 +226,7 @@ class TranslationActivity : AppCompatActivity() {
 
         speakTextBtn.setOnClickListener {
             val text = inputText.text.toString()
-            val lang = spinner.selectedItem.toString()
-            tts.language = getLocaleFromLanguage(lang)
+            tts.language = getLocaleFromLanguage(spinner.selectedItem.toString())
             if (text.isNotBlank()) {
                 tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
             }
@@ -208,9 +244,7 @@ class TranslationActivity : AppCompatActivity() {
         }
 
         listenBtn.setOnClickListener {
-            val lang = spinner.selectedItem.toString()
-            val locale = getLocaleFromLanguage(lang)
-
+            val locale = getLocaleFromLanguage(spinner.selectedItem.toString())
             if (isListening) {
                 speechRecognizer?.stopListening()
                 listenBtn.setImageResource(R.drawable.speak)
@@ -275,15 +309,14 @@ class TranslationActivity : AppCompatActivity() {
             return
         }
 
-        topToBottomTranslator = com.google.mlkit.nl.translate.Translation.getClient(
+        topToBottomTranslator = Translation.getClient(
             TranslatorOptions.Builder().setSourceLanguage(sourceLang).setTargetLanguage(targetLang).build()
         )
-        bottomToTopTranslator = com.google.mlkit.nl.translate.Translation.getClient(
+        bottomToTopTranslator = Translation.getClient(
             TranslatorOptions.Builder().setSourceLanguage(targetLang).setTargetLanguage(sourceLang).build()
         )
 
-        val conditions = DownloadConditions.Builder().build()
-
+        val conditions = DownloadConditions.Builder().requireWifi().build()
         topToBottomTranslator?.downloadModelIfNeeded(conditions)
         bottomToTopTranslator?.downloadModelIfNeeded(conditions)
     }
