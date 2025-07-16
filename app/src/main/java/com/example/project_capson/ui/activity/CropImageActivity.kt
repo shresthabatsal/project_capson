@@ -107,34 +107,37 @@ class CropImageActivity : AppCompatActivity() {
             .addOnSuccessListener { identifiedLanguages ->
                 if (identifiedLanguages.isEmpty()) {
                     Log.w(TAG, "No languages identified")
-                    returnToTranslationActivity(text, "hi") // Default to Hindi if no detection
+                    returnToTranslationActivity(text, "ne") // Default to Nepali if no detection
                     return@addOnSuccessListener
                 }
 
-                // Filter for our supported languages only
                 val supportedLanguages = identifiedLanguages.filter { lang ->
                     when (lang.languageTag) {
-                        "en", "es", "fr", "hi" -> true
+                        "en", "es", "fr", "hi", "ne" -> true
                         else -> false
                     }
                 }
 
                 if (supportedLanguages.isNotEmpty()) {
-                    // Get the highest confidence supported language
                     val bestLanguage = supportedLanguages.maxByOrNull { it.confidence }!!
                     Log.d(TAG, "Detected language: ${bestLanguage.languageTag} (confidence: ${bestLanguage.confidence})")
                     returnToTranslationActivity(text, bestLanguage.languageTag)
                 } else {
-                    // If text was detected by Devanagari but language not identified, assume Hindi
-                    val assumedLanguage = if (text.contains(Regex("[\\u0900-\\u097F]"))) "hi" else "en"
+                    // If Devanagari chars found, assume Nepali, else English
+                    val devanagariRegex = Regex("[\\u0900-\\u097F]")
+                    val assumedLanguage = if (devanagariRegex.containsMatchIn(text)) {
+                        "ne"
+                    } else {
+                        "en"
+                    }
                     Log.w(TAG, "No supported language detected, assuming $assumedLanguage")
                     returnToTranslationActivity(text, assumedLanguage)
                 }
             }
             .addOnFailureListener { e ->
                 Log.e(TAG, "Language detection failed", e)
-                // If text contains Devanagari characters, assume Hindi
-                val assumedLanguage = if (text.contains(Regex("[\\u0900-\\u097F]"))) "hi" else "en"
+                val devanagariRegex = Regex("[\\u0900-\\u097F]")
+                val assumedLanguage = if (devanagariRegex.containsMatchIn(text)) "ne" else "en"
                 returnToTranslationActivity(text, assumedLanguage)
             }
     }
