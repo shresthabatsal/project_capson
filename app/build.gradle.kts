@@ -52,7 +52,7 @@ dependencies {
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
     implementation(libs.firebase.auth.ktx)
-    implementation(libs.common)
+    implementation(libs.androidx.camera.view)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -61,4 +61,17 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("com.google.mlkit:translate:16.1.2")
+
+    implementation("androidx.camera:camera-core:1.3.0'")
+    implementation("androidx.camera:camera-camera2:1.3.0")
+    implementation ("androidx.camera:camera-lifecycle:1.3.0")
+    implementation("androidx.camera:camera-view:1.3.0")
+    implementation("com.google.guava:guava:31.1-android")
+    implementation("com.github.yalantis:ucrop:2.2.8")
+
+    implementation("com.google.mlkit:text-recognition:16.0.0")
+    implementation("com.google.mlkit:language-id:17.0.4")
+
+    implementation("com.google.mlkit:text-recognition-devanagari:16.0.0")
+    implementation("com.google.mlkit:text-recognition:16.0.0")
 }
