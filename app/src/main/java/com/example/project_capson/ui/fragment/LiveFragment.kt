@@ -14,11 +14,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.project_capson.R
+import com.example.project_capson.ui.activity.Overlay
+import com.google.firebase.auth.FirebaseAuth
 import com.google.mlkit.common.model.DownloadConditions
-import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.Translator
 import com.google.mlkit.nl.translate.TranslatorOptions
+import java.util.Locale
 
 class LiveFragment : Fragment() {
 
@@ -30,6 +32,9 @@ class LiveFragment : Fragment() {
     private lateinit var btnRefresh: ImageButton
     private lateinit var btnExchange: ImageButton
     private lateinit var timerText: TextView
+
+    private lateinit var loginOverlay: View
+    private lateinit var overlayLoginButton: Button
 
     private var speechRecognizer: SpeechRecognizer? = null
     private var isListening = false
@@ -71,7 +76,6 @@ class LiveFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_live, container, false)
 
-        // Initialize views
         spinnerFrom = view.findViewById(R.id.spinner_from)
         spinnerTo = view.findViewById(R.id.spinner_to)
         outputBox = view.findViewById(R.id.output_box)
@@ -81,13 +85,69 @@ class LiveFragment : Fragment() {
         btnExchange = view.findViewById(R.id.btn_exchange)
         timerText = view.findViewById(R.id.timer_text)
 
+        loginOverlay = view.findViewById(R.id.login_overlay)
+        overlayLoginButton = view.findViewById(R.id.btn_overlay_login)
+
         btnPause.setImageResource(R.drawable.pause)
 
         setupSpinners()
         setupListeners()
         checkMicPermission()
 
+        overlayLoginButton.setOnClickListener {
+            val intent = Intent(requireContext(), Overlay::class.java)
+            startActivity(intent)
+        }
+
+        checkLoginStatusAndToggleOverlay()
+
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkLoginStatusAndToggleOverlay()
+    }
+
+    private fun checkLoginStatusAndToggleOverlay() {
+        val loggedIn = isUserLoggedIn()
+
+        if (!loggedIn) {
+            loginOverlay.visibility = View.VISIBLE
+            disableFragmentInteraction()
+        } else {
+            loginOverlay.visibility = View.GONE
+            enableFragmentInteraction()
+        }
+    }
+
+    private fun isUserLoggedIn(): Boolean {
+        // Example using FirebaseAuth:
+        return FirebaseAuth.getInstance().currentUser != null
+
+        // OR if you use SharedPreferences, replace above with your logic:
+        /*
+        val sharedPref = requireContext().getSharedPreferences("MyAppPrefs", 0)
+        return sharedPref.getBoolean("logged_in", false)
+        */
+    }
+
+    private fun disableFragmentInteraction() {
+        spinnerFrom.isEnabled = false
+        spinnerTo.isEnabled = false
+        btnListenStop.isEnabled = false
+        btnPause.isEnabled = false
+        btnRefresh.isEnabled = false
+        btnExchange.isEnabled = false
+    }
+
+    private fun enableFragmentInteraction() {
+        spinnerFrom.isEnabled = true
+        spinnerTo.isEnabled = true
+        btnListenStop.isEnabled = true
+        btnPause.isEnabled = true
+        btnRefresh.isEnabled = true
+        btnExchange.isEnabled = true
     }
 
     private fun setupSpinners() {
@@ -308,7 +368,7 @@ class LiveFragment : Fragment() {
     private fun updateTimerText() {
         val min = elapsedSeconds / 60
         val sec = elapsedSeconds % 60
-        timerText.text = String.format("%02d:%02d", min, sec)
+        timerText.text = String.format(Locale.US, "%02d:%02d", min, sec)
     }
 
     private fun destroyRecognizer() {

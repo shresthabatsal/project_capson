@@ -13,4 +13,5 @@
         android:id="@+id/nav_scan"
         android:icon="@drawable/scan"
         android:title="" />
+
 </menu>
