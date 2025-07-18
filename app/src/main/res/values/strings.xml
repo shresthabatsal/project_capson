@@ -2,4 +2,8 @@
     <string name="app_name">project_capson</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_required">Login Required</string>
+    <string name="this_feature_is_available_only_to_logged_in_users_please_log_in_to_continue_and_access_all_functionalities">This feature is available only to logged-in users. Please log in to continue and access all functionalities.</string>
+    <string name="log_in">Log in</string>
+    <string name="logout">Logout</string>
 </resources>
