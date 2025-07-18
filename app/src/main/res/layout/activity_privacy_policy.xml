@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    android:background="@android:color/white">
+
+    <!-- Top App Bar with Back Button -->
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <!-- Title -->
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/privacyToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                app:navigationIcon="@drawable/ic_arrow_back_24"
+                app:title="Privacy Policy"
+                app:titleCentered="true" />
+
+            <TextView
+            android:id="@+id/tvPrivacyTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Effective Date -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Effective Date: July 11, 2025\nLast Updated: July 11, 2025"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat" />
+
+        <!-- Intro -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Capson (“we”, “our”, or “us”) respects your privacy. This Privacy Policy explains how we collect, use, and protect your information when you use the Capson mobile app."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat" />
+
+        <!-- Sections -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Information We Collect"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Personal Information\nWe collect basic details like your name, email, and password when you sign up, log in, reset your password, or edit your profile.\n\nUsage Data\nWe collect technical data such as device type, OS version, app features used, and crash reports to improve app performance.\n\nSpeech and Image Data\nFor features like Live Captions, Conversation Translate, and Scan  Translate, audio and image data is temporarily processed for translation and not stored unless required for future features (e.g., saved transcripts, currently disabled).\n\nHelp Usage\nWhen you use help features, we log which screen or section it was accessed from to improve support."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. How We Use Your Information"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="We use your information to improve app features, manage accounts, respond to support requests, and improve overall performance."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Sharing and Disclosure"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="We do not sell your data. We may share it with trusted service providers (e.g., Firebase, AWS) if required by law."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="4. Data Security"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="We use encryption and secure servers to protect your information. Passwords are securely hashed."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5. Your Rights"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You can update your info, reset your password, or delete your account by contacting support@capsonapp.com."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="6. Children’s Privacy"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Capson is not intended for children under 13. We do not knowingly collect their data."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="7. Third-Party Services"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="We use tools like Google ML Kit and Firebase, which have their own privacy policies."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="8. Policy Updates"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="We may update this policy and will notify you by updating the 'Last Updated' date."
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="9. Contact Us"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/montserrat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email: support@capsonapp.com\nWebsite: www.capsonapp.com"
+            android:textSize="14sp"
+            android:fontFamily="@font/montserrat" />
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>

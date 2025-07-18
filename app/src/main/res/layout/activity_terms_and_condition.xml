@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <!-- Toolbar with Back Button -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/termsToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:title="Terms And Conditions"
+        app:titleCentered="true"
+        app:navigationIcon="@drawable/ic_arrow_back_24" />
+
+    <!-- Scrollable Terms Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="Effective Date: July 11, 2025\n\nThese Terms and Conditions (“Terms”) govern your use of the Capson mobile application (“App”), operated by Capson Technologies Pvt. Ltd. (“we”, “our”, or “us”). By downloading or using the App, you agree to these Terms. If you do not agree, please do not use the App."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp" />
+
+            <TextView
+                android:text="\n1. Use of the App\nYou must be at least 13 years old to use Capson. By creating an account, you agree that the information you provide is accurate and that you will keep your login credentials secure."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+
+            <TextView
+                android:text="\n2. Features and Access\nSome features, such as Live Translated Captions, are only available to logged-in users. We may introduce or remove features at any time without notice."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+
+            <TextView
+                android:text="\n3. Account and Security\nYou are responsible for maintaining the confidentiality of your account and password. You agree to notify us immediately at support@capsonapp.com if you suspect unauthorized use of your account."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+
+            <TextView
+                android:text="\n4. User Conduct\nYou agree not to misuse the App, including but not limited to:\n• Interfering with the operation of the App\n• Attempting to reverse-engineer or exploit any part of the App\n• Submitting false, harmful, or offensive content."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+
+            <TextView
+                android:text="\n5. Intellectual Property\nAll content, features, and design of the Capson App are the property of Capson Technologies Pvt. Ltd. and are protected by applicable copyright and trademark laws."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+
+            <TextView
+                android:text="\n6. Data and Privacy\nBy using the App, you agree to our Privacy Policy. We take reasonable steps to protect your personal information, but you acknowledge that no method of transmission over the internet is 100% secure."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+
+            <TextView
+                android:text="\n7. Third-Party Services\nCapson may use third-party services like Firebase and Google ML Kit. We are not responsible for the practices or content of those services."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+
+            <TextView
+                android:text="\n8. Modifications to the App\nWe reserve the right to modify, suspend, or discontinue any feature or part of the App at any time, with or without notice."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+
+            <TextView
+                android:text="\n9. Termination\nWe may suspend or terminate your access to the App if you violate these Terms or if required by law."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+
+            <TextView
+                android:text="\n10. Disclaimer\nThe App is provided “as is” without warranties of any kind. We do not guarantee that the App will be error-free, uninterrupted, or meet your expectations."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+
+            <TextView
+                android:text="\n11. Limitation of Liability\nCapson Technologies Pvt. Ltd. is not liable for any direct, indirect, incidental, or consequential damages resulting from your use or inability to use the App."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+
+            <TextView
+                android:text="\n12. Governing Law\nThese Terms are governed by the laws of Nepal. Any disputes arising from or relating to these Terms shall be handled in the courts of Kathmandu, Nepal."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+
+            <TextView
+                android:text="\n13. Contact Information\nIf you have any questions about these Terms, contact us:\nEmail: support@capsonapp.com\nWebsite: www.capsonapp.com"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

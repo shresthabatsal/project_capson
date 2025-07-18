@@ -45,10 +45,10 @@ class OnboardingActivity : AppCompatActivity() {
 
         // Setup button actions
         findViewById<Button>(R.id.skipButton).setOnClickListener {
-//            val intent= Intent(
-//                this@OnboardingActivity,
-//                RoleActivity::class.java
-//            )
+            val intent= Intent(
+                this@OnboardingActivity,
+                WelcomeActivity::class.java
+            )
             startActivity(intent)
         }
 
@@ -56,10 +56,10 @@ class OnboardingActivity : AppCompatActivity() {
             if (viewPager.currentItem + 1 < adapter.itemCount) {
                 viewPager.currentItem += 1
             } else {
-//                val intent= Intent(
-//                    this@OnboardingActivity,
-//                    RoleActivity::class.java
-//                )
+                val intent= Intent(
+                    this@OnboardingActivity,
+                    WelcomeActivity::class.java
+                )
                 startActivity(intent)
             }
         }

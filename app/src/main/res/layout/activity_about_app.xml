@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <!-- Toolbar with Back Button -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/aboutToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:title="About App"
+        app:titleCentered="true"
+        app:navigationIcon="@drawable/ic_arrow_back_24" />
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="3dp"
+                android:text="Capson is a smart, multilingual communication assistant designed to break language barriers in real time. Whether you're attending an event, having a conversation with someone who speaks a different language, or trying to understand written content in another script, Capson helps you communicate clearly and confidently. Capson offers three core features:\n\n1. Live Translated Captions\nTurn live speech into translated captions instantly. Perfect for talks, seminars, or events, this feature listens to the speaker and displays translated text on-screen in real time. This feature is exclusive to logged-in users and is designed to enhance accessibility and understanding during live interactions.\n\n2. Conversation Translate\nHave natural conversations with someone who speaks a different language. Whether typing or speaking, Capson translates both sides in real time—making it easy to connect, collaborate, or simply chat with anyone, anywhere.\n\n3. Scan Translate\nUse your camera to scan printed text from signs, menus, books, or documents and get an instant translation or listen to the text read aloud. Capson helps you understand written content in any setting, even offline.\n\nAdditional features include:\n• User Accounts  Authentication: Secure sign up, login, password recovery, and profile editing.\n• Context-Sensitive Help: Help buttons in each section guide you based on the feature you’re using.\n• Privacy First: Your speech and images are processed only as needed—nothing is stored without your permission.\n\nCapson is built for students, travelers, event-goers, and anyone navigating multilingual environments. It’s intuitive, secure, and evolving—with features like saved transcripts and smarter interactions coming soon.\n\nWhether you’re translating a seminar in real time or scanning a foreign label, Capson makes communication effortless."
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

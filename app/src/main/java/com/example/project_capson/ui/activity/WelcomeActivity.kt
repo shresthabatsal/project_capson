@@ -16,13 +16,14 @@ class WelcomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 //        // “Get Started” -> send user to Sign‑Up or Login
-//        binding.btnGetStarted.setOnClickListener {
-//            startActivity(Intent(this, LoginActivity::class.java))
-//        }
+        binding.btnGetStarted.setOnClickListener {
+            startActivity(Intent(this, SignUp::class.java))
+        }
 //
 //        // “Continue Without An Account” -> maybe MainActivity
-//        binding.tvSkip.setOnClickListener {
-//            startActivity(Intent(this, MainActivity::class.java))
-//        }
+        binding.tvSkip.setOnClickListener {
+            startActivity(Intent(this, BottomNavActivity::class.java))
+        }
+        }
     }
-}
+
