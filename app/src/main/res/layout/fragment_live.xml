@@ -1,145 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/mainLayout"
+    android:id="@+id/root_frame"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="16dp"
-    android:paddingRight="16dp"
-    android:paddingLeft="16dp"
-    android:paddingTop="0dp"
-    android:background="#FFFFFF">
+    android:layout_height="match_parent">
 
-    <!-- Language Selection -->
+    <!-- Existing UI content -->
     <LinearLayout
+        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/edittext_background"
-        android:padding="12dp"
-        android:layout_marginBottom="12dp"
-        android:gravity="center_vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="0dp"
+        android:background="#FFFFFF">
 
-        <!-- From -->
+        <!-- Language Selection -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="start">
+            android:orientation="horizontal"
+            android:background="@drawable/edittext_background"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- From -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingStart="7dp"
-                android:text="Translate from"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="start">
 
-            <Spinner
-                android:id="@+id/spinner_from"
-                android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="7dp"
+                    android:text="Translate from"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinner_from"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/spinner_background" />
+            </LinearLayout>
+
+            <!-- Exchange Button -->
+            <ImageButton
+                android:id="@+id/btn_exchange"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@drawable/transparent_bg"
+                android:src="@drawable/exchange"
+                android:contentDescription="Exchange" />
+
+            <!-- To -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/spinner_background" />
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="7dp"
+                    android:text="Translate to"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinner_to"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/spinner_background" />
+            </LinearLayout>
         </LinearLayout>
 
-        <!-- Exchange Button -->
-        <ImageButton
-            android:id="@+id/btn_exchange"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@drawable/transparent_bg"
-            android:src="@drawable/exchange"
-            android:contentDescription="Exchange" />
-
-        <!-- To -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <!-- Output Box -->
+        <TextView
+            android:id="@+id/output_box"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:background="@drawable/edittext_background"
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:hint="Caption appears here."
+            android:textColor="#000000"
+            android:gravity="top|start"
+            android:scrollbars="vertical"
+            android:layout_marginBottom="12dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="7dp"
-                android:text="Translate to"
-                android:textStyle="bold" />
+        <!-- Timer -->
+        <TextView
+            android:id="@+id/timer_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="12dp" />
 
-            <Spinner
-                android:id="@+id/spinner_to"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/spinner_background" />
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCCCCC"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Controls Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btn_pause"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@drawable/transparent_bg"
+                android:src="@drawable/pause"
+                android:contentDescription="Pause"
+                android:layout_marginEnd="24dp" />
+
+            <ImageButton
+                android:id="@+id/btn_listen_stop"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:background="@drawable/circle_black_button_bg"
+                android:src="@drawable/speak"
+                android:contentDescription="Listen"
+                android:layout_marginEnd="24dp" />
+
+            <ImageButton
+                android:id="@+id/btn_refresh"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@drawable/transparent_bg"
+                android:src="@drawable/refresh"
+                android:contentDescription="Refresh" />
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Output Box -->
-    <TextView
-        android:id="@+id/output_box"
+    <!-- Login overlay view, shown only if not logged in -->
+    <FrameLayout
+        android:id="@+id/login_overlay"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/edittext_background"
-        android:padding="12dp"
-        android:textSize="16sp"
-        android:hint="Caption appears here."
-        android:textColor="#000000"
-        android:gravity="top|start"
-        android:scrollbars="vertical"
-        android:layout_marginBottom="12dp" />
+        android:layout_height="match_parent"
+        android:background="@color/semi_white"
+    android:visibility="gone"
+    android:clickable="true"
+    android:focusable="true">
 
-    <!-- Timer -->
-    <TextView
-        android:id="@+id/timer_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="00:00"
-        android:textSize="18sp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="12dp" />
+<!--    <LinearLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="24dp"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        android:layout_gravity="center">-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp"
+            android:background="@android:color/transparent">
 
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#CCCCCC"
-        android:layout_marginBottom="16dp" />
+            <TextView
+                android:id="@+id/text_login_required"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You need to login to use this feature"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textAlignment="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="280dp"/>
 
-    <!-- Controls Row -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+            <Button
+                android:id="@+id/btn_overlay_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#000000"
+                android:text="Login"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_login_required" />
 
-        <ImageButton
-            android:id="@+id/btn_pause"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:background="@drawable/transparent_bg"
-            android:src="@drawable/pause"
-            android:contentDescription="Pause"
-            android:layout_marginEnd="24dp" />
-
-        <ImageButton
-            android:id="@+id/btn_listen_stop"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:background="@drawable/circle_black_button_bg"
-            android:src="@drawable/speak"
-            android:contentDescription="Listen"
-            android:layout_marginEnd="24dp"
-            app:tint="@android:color/white" />
-
-        <ImageButton
-            android:id="@+id/btn_refresh"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:background="@drawable/transparent_bg"
-            android:src="@drawable/refresh"
-            android:contentDescription="Refresh" />
-    </LinearLayout>
-</LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
+    </FrameLayout>
