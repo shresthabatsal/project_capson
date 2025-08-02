@@ -204,6 +204,6 @@
             app:layout_constraintTop_toBottomOf="@id/btnFAQs"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
+        <include layout="@layout/login_overlay" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

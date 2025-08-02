@@ -49,14 +49,16 @@ class BottomNavActivity : AppCompatActivity() {
 
         binding.helpButton.setOnClickListener {
             val intent = when (currentTab) {
-                TabType.LIVE -> Intent(this, MainActivity::class.java)
-                TabType.CONVERSATION -> Intent(this, MainActivity::class.java)
-                TabType.SCAN -> Intent(this, MainActivity::class.java)
+                TabType.LIVE -> Intent(this, Help1Activity::class.java)
+                TabType.CONVERSATION -> Intent(this, Help2Activity::class.java)
+                TabType.SCAN -> Intent(this, Help3Activity::class.java)
             }
             startActivity(intent)
         }
 
         binding.profileButton.setOnClickListener {
+            val intent = Intent(this, AccountActivity::class.java)
+            startActivity(intent)
         }
     }
 
