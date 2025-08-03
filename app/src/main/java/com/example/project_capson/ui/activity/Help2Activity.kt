@@ -14,7 +14,7 @@ class Help2Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHelp1Binding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_help2)
 
         binding.toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()

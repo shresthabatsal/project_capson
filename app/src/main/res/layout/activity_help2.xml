@@ -2,21 +2,23 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!-- ─────────────────────────  Top App Bar  ────────────────────────── -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorSurface"
-        app:title="Help"
-        app:titleCentered="true"
-        app:navigationIcon="@drawable/ic_arrow_back_24"
+        android:backgroundTint="@color/white"
+        android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back_24"
+        app:title="Help"
+        app:titleCentered="true" />
 
     <!-- ─────────────────────────  Scrollable area  ────────────────────── -->
     <ScrollView
@@ -42,7 +44,7 @@
                 android:id="@+id/tvGuideTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Guide: Live Captions Translation"
+                android:text="Guide: Conversation Translate"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:layout_marginBottom="8dp"

@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
 
                         // TODO: Navigate to dashboard or home
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this, BottomNavActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {

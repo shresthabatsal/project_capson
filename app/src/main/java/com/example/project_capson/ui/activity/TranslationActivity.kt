@@ -81,9 +81,9 @@ class TranslationActivity : AppCompatActivity() {
         bottomSpinner.adapter = adapter
 
         mainSpinnerFrom.setSelection(0)
-        mainSpinnerTo.setSelection(1)
+        mainSpinnerTo.setSelection(0)
         topSpinner.setSelection(0)
-        bottomSpinner.setSelection(1)
+        bottomSpinner.setSelection(0)
 
         intent?.getStringExtra("detectedText")?.let { text ->
             topInputText.setText(text)

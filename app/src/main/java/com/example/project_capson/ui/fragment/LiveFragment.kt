@@ -1,4 +1,3 @@
-
 package com.example.project_capson.ui.fragment
 
 import android.Manifest
@@ -11,11 +10,11 @@ import android.speech.SpeechRecognizer
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.activity.result.contract.ActivityResultContracts
 import com.example.project_capson.R
-import com.example.project_capson.ui.activity.Overlay
+import com.example.project_capson.ui.activity.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.translate.Translation
@@ -86,7 +85,8 @@ class LiveFragment : Fragment() {
         btnExchange = view.findViewById(R.id.btn_exchange)
         timerText = view.findViewById(R.id.timer_text)
 
-        loginOverlay = view.findViewById(R.id.login_overlay)
+        // Initialize overlay views from the included layout
+        loginOverlay = view.findViewById(R.id.login_overlay_container)
         overlayLoginButton = view.findViewById(R.id.btn_overlay_login)
 
         btnPause.setImageResource(R.drawable.pause)
@@ -96,7 +96,7 @@ class LiveFragment : Fragment() {
         checkMicPermission()
 
         overlayLoginButton.setOnClickListener {
-            val intent = Intent(requireContext(), Overlay::class.java)
+            val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
         }
 
@@ -123,14 +123,7 @@ class LiveFragment : Fragment() {
     }
 
     private fun isUserLoggedIn(): Boolean {
-        // Example using FirebaseAuth:
         return FirebaseAuth.getInstance().currentUser != null
-
-        // OR if you use SharedPreferences, replace above with your logic:
-        /*
-        val sharedPref = requireContext().getSharedPreferences("MyAppPrefs", 0)
-        return sharedPref.getBoolean("logged_in", false)
-        */
     }
 
     private fun disableFragmentInteraction() {
@@ -157,7 +150,7 @@ class LiveFragment : Fragment() {
         spinnerFrom.adapter = adapter
         spinnerTo.adapter = adapter
         spinnerFrom.setSelection(0)
-        spinnerTo.setSelection(1)
+        spinnerTo.setSelection(0)
 
         spinnerFrom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
