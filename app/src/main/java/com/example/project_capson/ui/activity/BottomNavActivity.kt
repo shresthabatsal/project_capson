@@ -18,14 +18,18 @@ class BottomNavActivity : AppCompatActivity() {
         LIVE, CONVERSATION, SCAN
     }
 
-    private var currentTab: TabType = TabType.LIVE
+    private var currentTab: TabType = TabType.CONVERSATION
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBottomNavBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        loadFragment(LiveFragment())
+        // Set default selected bottom navigation item
+        binding.bottomNav.selectedItemId = R.id.nav_conversation
+
+        // Load default fragment
+        loadFragment(ConversationFragment())
         updateTopBar(currentTab)
 
         binding.bottomNav.setOnItemSelectedListener { item ->
@@ -70,7 +74,7 @@ class BottomNavActivity : AppCompatActivity() {
 
     private fun updateTopBar(tab: TabType) {
         val title = when (tab) {
-            TabType.LIVE -> "Live Caption"
+            TabType.LIVE -> "Live"
             TabType.CONVERSATION -> "Translate"
             TabType.SCAN -> "Scan"
         }

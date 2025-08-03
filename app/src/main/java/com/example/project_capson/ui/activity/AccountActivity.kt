@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.ViewCompat
@@ -50,6 +51,11 @@ class AccountActivity : AppCompatActivity() {
             finish()
         }
 
+        val personalDetailsBtn = findViewById<LinearLayout>(R.id.btnPersonalDetails)
+        personalDetailsBtn.setOnClickListener {
+            startActivity(Intent(this, PersonalDetails::class.java))
+        }
+
         val privacyPolicyBtn = findViewById<LinearLayout>(R.id.btnPrivacyPolicy)
         privacyPolicyBtn.setOnClickListener {
             startActivity(Intent(this, PrivacyPolicyActivity::class.java))
@@ -70,11 +76,10 @@ class AccountActivity : AppCompatActivity() {
             startActivity(Intent(this, FAQActivity::class.java))
         }
 
-        // LOGOUT logic
+        // LOGOUT logic with confirmation dialog
         val logoutBtn = findViewById<AppCompatButton>(R.id.btnLogout)
         logoutBtn.setOnClickListener {
-            auth.signOut()
-            checkLoginStatusAndToggleOverlay()
+            showLogoutConfirmationDialog()
         }
 
         checkLoginStatusAndToggleOverlay()
@@ -83,6 +88,26 @@ class AccountActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkLoginStatusAndToggleOverlay()
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Logout Confirmation")
+            .setMessage("Are you sure you want to logout?")
+            .setPositiveButton("Yes") { dialog, _ ->
+                auth.signOut()
+                dialog.dismiss()
+                // After logout, go to WelcomeActivity
+                val intent = Intent(this, WelcomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 
     private fun checkLoginStatusAndToggleOverlay() {

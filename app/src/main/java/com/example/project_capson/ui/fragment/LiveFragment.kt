@@ -150,7 +150,7 @@ class LiveFragment : Fragment() {
         spinnerFrom.adapter = adapter
         spinnerTo.adapter = adapter
         spinnerFrom.setSelection(0)
-        spinnerTo.setSelection(1)
+        spinnerTo.setSelection(0)
 
         spinnerFrom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
