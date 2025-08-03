@@ -18,14 +18,18 @@ class BottomNavActivity : AppCompatActivity() {
         LIVE, CONVERSATION, SCAN
     }
 
-    private var currentTab: TabType = TabType.LIVE
+    private var currentTab: TabType = TabType.CONVERSATION
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBottomNavBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        loadFragment(LiveFragment())
+        // Set default selected bottom navigation item
+        binding.bottomNav.selectedItemId = R.id.nav_conversation
+
+        // Load default fragment
+        loadFragment(ConversationFragment())
         updateTopBar(currentTab)
 
         binding.bottomNav.setOnItemSelectedListener { item ->
@@ -49,14 +53,16 @@ class BottomNavActivity : AppCompatActivity() {
 
         binding.helpButton.setOnClickListener {
             val intent = when (currentTab) {
-                TabType.LIVE -> Intent(this, MainActivity::class.java)
-                TabType.CONVERSATION -> Intent(this, MainActivity::class.java)
-                TabType.SCAN -> Intent(this, MainActivity::class.java)
+                TabType.LIVE -> Intent(this, Help1Activity::class.java)
+                TabType.CONVERSATION -> Intent(this, Help2Activity::class.java)
+                TabType.SCAN -> Intent(this, Help3Activity::class.java)
             }
             startActivity(intent)
         }
 
         binding.profileButton.setOnClickListener {
+            val intent = Intent(this, AccountActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -68,7 +74,7 @@ class BottomNavActivity : AppCompatActivity() {
 
     private fun updateTopBar(tab: TabType) {
         val title = when (tab) {
-            TabType.LIVE -> "Live Caption"
+            TabType.LIVE -> "Live"
             TabType.CONVERSATION -> "Translate"
             TabType.SCAN -> "Scan"
         }

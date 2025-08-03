@@ -8,7 +8,16 @@
       <SelectionState runConfigName="BottomNavActivity">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="OnboardingActivity">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
       <SelectionState runConfigName="PersonalDetails">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="AccountActivity">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="ChangePw">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
